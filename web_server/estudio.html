@@ -1,0 +1,2419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio Interactiva - Grúa Torre Dual</title>
+    
+    <!-- Tipografía Premium Outfit (Google Fonts) con fuentes seguras de respaldo -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- SISTEMA DE DISEÑO Y VARIABLES CSS --- */
+        :root {
+            /* Tema Oscuro (Defecto) */
+            --bg-body: #0b0f19;
+            --bg-sidebar: rgba(15, 23, 42, 0.9);
+            --bg-card: rgba(22, 30, 49, 0.7);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --border-color: rgba(148, 163, 184, 0.12);
+            --border-color-active: rgba(56, 189, 248, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-primary: #38bdf8; /* Cian */
+            --accent-secondary: #c084fc; /* Morado */
+            --accent-success: #4ade80; /* Verde */
+            --accent-warning: #fb923c; /* Naranja */
+            --accent-danger: #f43f5e; /* Rojo */
+            --glass-blur: blur(16px);
+            --shadow-premium: 0 15px 35px rgba(0, 0, 0, 0.5);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .light-theme {
+            /* Tema Claro (Crema Premium) */
+            --bg-body: #f8fafc;
+            --bg-sidebar: rgba(241, 245, 249, 0.95);
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card-hover: rgba(248, 250, 252, 0.95);
+            --border-color: rgba(15, 23, 42, 0.08);
+            --border-color-active: rgba(30, 58, 138, 0.4);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-primary: #0284c7; /* Azul profundo */
+            --accent-secondary: #7c3aed; /* Violeta */
+            --accent-success: #16a34a; /* Verde oscuro */
+            --accent-warning: #ea580c; /* Naranja oscuro */
+            --accent-danger: #e11d48; /* Rojo oscuro */
+            --glass-blur: blur(20px);
+            --shadow-premium: 0 15px 35px rgba(15, 23, 42, 0.08);
+            --card-shadow: 0 8px 32px 0 rgba(148, 163, 184, 0.18);
+        }
+
+        /* --- ESTILOS GENERALES Y MAQUETACIÓN --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo decorativo de gradiente dinámico */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 10% 15%, rgba(56, 189, 248, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 90% 85%, rgba(192, 132, 252, 0.07) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- BARRA LATERAL (SIDEBAR - DESKTOP) --- */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-link:hover {
+            color: var(--text-main);
+            background-color: var(--bg-card-hover);
+            border-color: var(--border-color);
+            transform: translateX(4px);
+        }
+
+        .sidebar-link.active {
+            color: var(--text-main);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(192, 132, 252, 0.15) 100%);
+            border-color: var(--border-color-active);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.1);
+        }
+
+        .sidebar-link svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 280px;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 280px);
+        }
+
+        /* --- CABECERA SUPERIOR --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header-title-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Botón de navegación premium */
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-main);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-primary);
+            background-color: var(--bg-card-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .nav-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Botón conmutador de tema circular */
+        .theme-toggle-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-secondary);
+            transform: rotate(30deg) scale(1.05);
+            box-shadow: 0 0 15px rgba(192, 132, 252, 0.25);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN INFERIOR (MÓVIL) --- */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: var(--bg-sidebar);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-top: 1px solid var(--border-color);
+            z-index: 1000;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.25);
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-grow: 1;
+            max-width: 70px;
+        }
+
+        .bottom-nav-item svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--accent-primary);
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        /* --- ESTRUCTURA DE TABS (PÁGINAS) --- */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- ESTILOS DE TARJETAS (CARDS) --- */
+        .card {
+            background-color: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(192, 132, 252, 0.15) 100%);
+            border: 1px solid var(--border-color-active);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+        }
+
+        .card-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* --- TEXTOS EXPLICATIVOS Y COMPONENTES --- */
+        .explain-block {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .explain-block p {
+            margin-bottom: 12px;
+        }
+
+        .highlight-box {
+            border-left: 4px solid var(--accent-primary);
+            background-color: rgba(56, 189, 248, 0.05);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-primary);
+        }
+
+        /* --- ACORDEONES COLAPSABLES (CÓDIGO / PREGUNTAS) --- */
+        .accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background-color: rgba(15, 23, 42, 0.2);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.02);
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .accordion-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .accordion-icon-arrow {
+            width: 18px;
+            height: 18px;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .accordion.open .accordion-icon-arrow {
+            transform: rotate(180deg);
+            color: var(--accent-primary);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: rgba(15, 23, 42, 0.4);
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        .accordion.open .accordion-content {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Bloque de código premium */
+        pre {
+            background-color: #05070d;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 18px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #34d399; /* Verde código */
+            line-height: 1.5;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .keyword { color: #f43f5e; font-weight: 600; }
+        .type { color: #38bdf8; font-weight: 600; }
+        .string { color: #fb923c; }
+        .comment { color: #64748b; font-style: italic; }
+        .number { color: #a855f7; }
+
+        /* --- TABLAS ORDENADAS --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(15, 23, 42, 0.4);
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* --- ESQUEMAS GRÁFICOS ASCII --- */
+        .ascii-diagram {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px dashed var(--border-color-active);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            line-height: 1.4;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* --- COMPARATIVAS EN CUADRÍCULA --- */
+        .grid-comparative {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .compare-card {
+            border: 1px solid var(--border-color);
+            background-color: rgba(15, 23, 42, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .compare-card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .compare-card-list {
+            list-style: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .compare-card-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .compare-card-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-secondary);
+            font-weight: 800;
+        }
+
+        /* --- 3D FLASHCARDS GIRATORIAS --- */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            perspective: 1000px;
+            margin: 25px 0;
+        }
+
+        .flashcard {
+            height: 220px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, rgba(22, 30, 49, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            color: var(--text-main);
+        }
+
+        .flashcard-front::after {
+            content: 'Hacer clic para girar';
+            position: absolute;
+            bottom: 12px;
+            font-size: 0.7rem;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            animation: heartbeat 2s infinite alternate;
+        }
+
+        @keyframes heartbeat {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(192, 132, 252, 0.08) 100%);
+            border-color: var(--border-color-active);
+            color: var(--text-main);
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .flashcard-description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .flashcard-back .flashcard-description {
+            color: var(--text-main);
+        }
+
+        /* --- GUIÓN DE EXPOSICIÓN (MATRIZ INTERACTIVA 4x4) --- */
+        .expo-matrix-wrapper {
+            margin: 25px 0;
+        }
+
+        .expo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .expo-filter-btn {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .expo-filter-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent-primary);
+        }
+
+        .expo-filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: #0f172a;
+            border-color: transparent;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+        }
+
+        .expo-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .expo-item {
+            border: 1px solid var(--border-color);
+            background-color: rgba(15, 23, 42, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .expo-item:hover {
+            border-color: var(--border-color-active);
+            transform: translateX(4px);
+        }
+
+        .expo-item.highlighted {
+            border-color: var(--border-color-active);
+            background-color: rgba(56, 189, 248, 0.05);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .expo-item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .expo-speaker {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .expo-speaker-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            background-color: rgba(255,255,255,0.05);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .expo-category-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-diseno { background-color: rgba(192, 132, 252, 0.15); color: var(--accent-secondary); }
+        .badge-progra { background-color: rgba(56, 189, 248, 0.15); color: var(--accent-primary); }
+        .badge-electro { background-color: rgba(251, 146, 60, 0.15); color: var(--accent-warning); }
+        .badge-pruebas { background-color: rgba(74, 222, 128, 0.15); color: var(--accent-success); }
+
+        .expo-script {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            border-left: 2px solid rgba(255,255,255,0.05);
+            padding-left: 15px;
+            margin-left: 5px;
+        }
+
+        .expo-order-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            opacity: 0.05;
+            color: var(--text-main);
+            pointer-events: none;
+        }
+
+        /* --- CUESTIONARIO INTERACTIVO (QUIZ) --- */
+        .quiz-question-card {
+            border: 1px solid var(--border-color);
+            background-color: rgba(15, 23, 42, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-q-num {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .quiz-q-text {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-opt-btn {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: left;
+            background-color: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quiz-opt-btn:hover:not(:disabled) {
+            background-color: var(--bg-card-hover);
+            border-color: var(--accent-primary);
+        }
+
+        .quiz-opt-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        /* Estados de respuesta del botón */
+        .quiz-opt-btn.correct {
+            background-color: rgba(74, 222, 128, 0.15) !important;
+            border-color: var(--accent-success) !important;
+            color: var(--accent-success) !important;
+        }
+
+        .quiz-opt-btn.incorrect {
+            background-color: rgba(244, 63, 94, 0.15) !important;
+            border-color: var(--accent-danger) !important;
+            color: var(--accent-danger) !important;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-secondary);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        /* --- FILTRADO BANCO DE PREGUNTAS --- */
+        .filter-section {
+            background-color: rgba(15, 23, 42, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background-color: #05070d;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            width: 18px;
+            height: 18px;
+        }
+
+        .category-select {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background-color: #05070d;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .category-select:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .bank-item {
+            display: block; /* Controlado dinámicamente por JS */
+            margin-bottom: 12px;
+        }
+
+        .bank-answer-text {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            border-left: 2px solid var(--accent-primary);
+            padding-left: 15px;
+        }
+
+        /* --- BOTÓN DE CIERRE DE PÁGINAS --- */
+        footer {
+            margin-top: auto;
+            padding: 30px 0 10px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- DISEÑO RESPONSIVO (MÓVIL) --- */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+                width: calc(100% - 240px);
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none; /* Ocultar sidebar en móvil */
+            }
+            .bottom-nav {
+                display: flex; /* Mostrar barra inferior */
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px 16px 90px 16px; /* Padding extra para no tapar con bottom-nav */
+            }
+            header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+            .header-actions {
+                justify-content: space-between;
+            }
+            .filter-section {
+                grid-template-columns: 1fr; /* Apilar filtros */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- --- BARRA LATERAL FIJA DE ESCRITORIO (SIDEBAR) --- -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <!-- Icono SVG Grúa -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M2 22h20M5 22V2M5 5h14M19 5v4M11 5v17"></path>
+                <circle cx="19" cy="11" r="2"></circle>
+            </svg>
+            <span>Guía de Estudio</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a class="sidebar-link active" onclick="switchTab(0)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    Programación
+                </a>
+            </li>
+            <li>
+                <a class="sidebar-link" onclick="switchTab(1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>
+                    Electrónica
+                </a>
+            </li>
+            <li>
+                <a class="sidebar-link" onclick="switchTab(2)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+                    Diseño & Arq.
+                </a>
+            </li>
+            <li>
+                <a class="sidebar-link" onclick="switchTab(3)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Pruebas & Seg.
+                </a>
+            </li>
+            <li>
+                <a class="sidebar-link" onclick="switchTab(4)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Guión Grupo
+                </a>
+            </li>
+            <li>
+                <a class="sidebar-link" onclick="switchTab(5)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Quiz & Retos
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- --- BARRA DE NAVEGACIÓN INFERIOR (MÓVIL) --- -->
+    <nav class="bottom-nav">
+        <a class="bottom-nav-item active" onclick="switchTab(0)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect></svg>
+            <span>Progr.</span>
+        </a>
+        <a class="bottom-nav-item" onclick="switchTab(1)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg>
+            <span>Elec.</span>
+        </a>
+        <a class="bottom-nav-item" onclick="switchTab(2)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+            <span>Dis.</span>
+        </a>
+        <a class="bottom-nav-item" onclick="switchTab(3)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path></svg>
+            <span>Prueb.</span>
+        </a>
+        <a class="bottom-nav-item" onclick="switchTab(4)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="7" r="4"></circle></svg>
+            <span>Guión</span>
+        </a>
+        <a class="bottom-nav-item" onclick="switchTab(5)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path></svg>
+            <span>Quiz</span>
+        </a>
+    </nav>
+
+    <!-- --- CONTENIDO DE LA APLICACIÓN --- -->
+    <main class="main-content">
+        
+        <!-- CABECERA SUPERIOR DINÁMICA -->
+        <header>
+            <div class="header-title-container">
+                <h1 class="header-title" id="activeTabTitle">💻 Programación (Software)</h1>
+                <p class="header-subtitle" id="activeTabSubtitle">Fundamentos del firmware y scripts del navegador para el control dual.</p>
+            </div>
+            <div class="header-actions">
+                <!-- Enlaces rápidos con estilo nav-btn -->
+                <a href="index.html" class="nav-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Panel Control
+                </a>
+                <a href="schema.html" class="nav-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    Esquema
+                </a>
+                <!-- Conmutador de tema -->
+                <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Cambiar Tema" id="themeBtn">
+                    <!-- Luna (Dark) por defecto -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" id="themeIcon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- ================= PESTAÑA 1: PROGRAMACIÓN ================= -->
+        <div class="tab-content active" id="tab0">
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </div>
+                    <h2 class="card-title">Principio de Control Exclusivo</h2>
+                </div>
+                <div class="explain-block">
+                    <p>En sistemas con control dual (físico y digital), la <strong>colisión de comandos</strong> ocurre cuando los Joysticks analógicos y la interfaz web envían órdenes a los motores simultáneamente. Esto causaría movimientos erráticos o sobrecargas eléctricas destructivas en el puente H.</p>
+                    
+                    <div class="highlight-box">
+                        Para prevenir esto, el firmware del Arduino Nano implementa un estado lógico exclusivo llamado <strong><code>manualMode</code></strong> (equivalente a <em>controlWebActivo = !manualMode</em>):
+                        <ul>
+                            <li><strong>Modo Web (<code>manualMode = false</code>)</strong>: Los joysticks físicos en A0, A1, A2 se ignoran por completo en el bucle principal. El Arduino solo acepta y ejecuta comandos que entren por el puerto serie USB (`CL`, `CR`, `EU`, `ED`, etc.).</li>
+                            <li><strong>Modo Manual (<code>manualMode = true</code>)</strong>: El Arduino frena cualquier comando web de movimiento de motores. Solo lee los voltajes analógicos de los potenciómetros físicos para calcular velocidades relativas por PWM.</li>
+                        </ul>
+                        La transición entre modos requiere de una orden limpia (`MM` o `MW`) o de presionar el pulsador físico en el joystick de Elevación (debounced en pin D6). Al cambiar de modo, el Arduino <strong>obliga la detención inmediata de todos los motores</strong> (`stopAllMotors()`) para evitar derivas por comandos residuales en RAM.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN ARDUINO NANO SKETCH -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span class="accordion-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 18l6-6-6-6M8 6L2 12l6 6"></path></svg>
+                        Arduino Nano C++ Sketch (SoftwareSerial D12/D9 para logs inalámbricos)
+                    </span>
+                    <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="explain-block">
+                        <p>El siguiente sketch configura un enlace serial alternativo por software en los pines **D12 (RX)** y **D9 (TX)**. Esto es muy útil en pruebas de ingeniería para transmitir trazas de telemetría o logs de estado de forma inalámbrica a través del ESP32 a 9600 baudios, mientras la conexión principal de control ocurre por USB (Serial de hardware).</p>
+                    </div>
+                    <pre><code><span class="keyword">#include</span> <span class="string">&lt;SoftwareSerial.h&gt;</span>
+
+<span class="comment">// Mapeo de Pines de Potencia y Señales</span>
+<span class="keyword">#define</span> AIN1 <span class="number">2</span>   <span class="comment">// Motor Carro</span>
+<span class="keyword">#define</span> AIN2 <span class="number">4</span>
+<span class="keyword">#define</span> PWMA <span class="number">3</span>
+<span class="keyword">#define</span> BTN_MODE <span class="number">6</span> <span class="comment">// Botón de modo</span>
+
+<span class="comment">// Configuración de SoftwareSerial solicitada en D12 (RX) y D9 (TX)</span>
+<span class="type">SoftwareSerial</span> <span class="type">debugSerial</span>(<span class="number">12</span>, <span class="number">9</span>);
+
+<span class="type">bool</span> manualMode = <span class="type">false</span>;
+<span class="type">unsigned long</span> lastCommandTime = <span class="number">0</span>;
+<span class="keyword">const</span> <span class="type">unsigned long</span> TIMEOUT = <span class="number">500</span>; <span class="comment">// Watchdog de seguridad (500 ms)</span>
+
+<span class="type">void</span> <span class="type">setup</span>() {
+  <span class="type">pinMode</span>(AIN1, <span class="type">OUTPUT</span>);
+  <span class="type">pinMode</span>(AIN2, <span class="type">OUTPUT</span>);
+  <span class="type">pinMode</span>(PWMA, <span class="type">OUTPUT</span>);
+  <span class="type">pinMode</span>(BTN_MODE, <span class="type">INPUT_PULLUP</span>);
+
+  <span class="type">Serial</span>.<span class="type">begin</span>(<span class="number">9600</span>);        <span class="comment">// USB principal de alta prioridad</span>
+  debugSerial.<span class="type">begin</span>(<span class="number">9600</span>);   <span class="comment">// Canal inalámbrico pasivo</span>
+  debugSerial.<span class="type">println</span>(<span class="string">"[SETUP] Canal de logs activado en Pines D12(RX)/D9(TX)"</span>);
+}
+
+<span class="type">void</span> <span class="type">loop</span>() {
+  <span class="type">unsigned long</span> now = <span class="type">millis</span>();
+  
+  <span class="comment">// Leer comandos desde USB</span>
+  <span class="keyword">if</span> (<span class="type">Serial</span>.<span class="type">available</span>()) {
+    <span class="type">String</span> cmd = <span class="type">Serial</span>.<span class="type">readStringUntil</span>(<span class="string">'\n'</span>);
+    cmd.<span class="type">trim</span>();
+    <span class="type">processCommand</span>(cmd);
+    lastCommandTime = now;
+  }
+
+  <span class="comment">// Watchdog por Software de Seguridad</span>
+  <span class="keyword">if</span> (!manualMode &amp;&amp; (now - lastCommandTime &gt; TIMEOUT)) {
+    <span class="type">stopAllMotors</span>();
+  }
+}
+
+<span class="type">void</span> <span class="type">processCommand</span>(<span class="type">String</span> cmd) {
+  <span class="keyword">if</span> (cmd == <span class="string">"S"</span>) {
+    <span class="type">stopAllMotors</span>();
+    debugSerial.<span class="type">println</span>(<span class="string">"[LOG] Motores detenidos por comando USB."</span>);
+  }
+  <span class="comment">// ... resto de comandos de control</span>
+}
+
+<span class="type">void</span> <span class="type">stopAllMotors</span>() {
+  <span class="type">digitalWrite</span>(AIN1, <span class="type">LOW</span>);
+  <span class="type">digitalWrite</span>(AIN2, <span class="type">LOW</span>);
+  <span class="type">analogWrite</span>(PWMA, <span class="number">0</span>);
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN ESP32 MICROPYTHON FIRMWARE -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span class="accordion-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 18l6-6-6-6M8 6L2 12l6 6"></path></svg>
+                        ESP32 MicroPython (Servidor Web asíncrono y Cola Circular FIFO de 50 líneas)
+                    </span>
+                    <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="explain-block">
+                        <p>El ESP32 funciona como un **servidor de diagnóstico pasivo inalámbrico**. Su firmware levanta un punto de acceso (Access Point) y escucha datos por hardware serial desde el Nano. Para evitar problemas de saturación de memoria RAM (`OutOfMemoryException`), almacena los logs en una cola circular de tamaño máximo de 50 líneas.</p>
+                    </div>
+                    <pre><code><span class="keyword">import</span> uasyncio <span class="keyword">as</span> asyncio
+<span class="keyword">from</span> machine <span class="keyword">import</span> UART, Pin
+
+<span class="comment"># Inicializar UART2 (RX=GPIO16, conecta al TX del SoftwareSerial de Arduino)</span>
+uart = UART(<span class="number">2</span>, baudrate=<span class="number">9600</span>, rx=<span class="number">16</span>, tx=<span class="number">17</span>)
+led = Pin(<span class="number">2</span>, Pin.OUT)
+
+<span class="comment"># Cola Circular (FIFO) de tamaño fijo para depuración segura en RAM</span>
+logs = []
+MAX_LOGS = <span class="number">50</span>
+
+<span class="keyword">def</span> <span class="type">add_log</span>(trace):
+    <span class="keyword">global</span> logs
+    logs.append(trace)
+    <span class="keyword">if</span> len(logs) &gt; MAX_LOGS:
+        logs.pop(<span class="number">0</span>) <span class="comment"># Remueve el log más antiguo (FIFO)</span>
+
+<span class="keyword">async def</span> <span class="type">uart_reader_task</span>():
+    <span class="keyword">print</span>(<span class="string">"Lector UART asíncrono activo..."</span>)
+    buffer = b<span class="string">""</span>
+    <span class="keyword">while True</span>:
+        <span class="keyword">await</span> asyncio.sleep_ms(<span class="number">30</span>)
+        <span class="keyword">if</span> uart.any():
+            chunk = uart.read()
+            <span class="keyword">if</span> chunk:
+                buffer += chunk
+                <span class="keyword">while</span> b<span class="string">"\n"</span> <span class="keyword">in</span> buffer:
+                    line, buffer = buffer.split(b<span class="string">"\n"</span>, <span class="number">1</span>)
+                    <span class="keyword">try</span>:
+                        decoded = line.decode(<span class="string">'utf-8'</span>).strip()
+                        <span class="keyword">if</span> decoded:
+                            add_log(decoded)
+                    <span class="keyword">except</span>Exception:
+                        <span class="keyword">pass</span>
+
+<span class="keyword">async def</span> <span class="type">handle_client</span>(reader, writer):
+    <span class="keyword">try</span>:
+        request = <span class="keyword">await</span> reader.read(<span class="number">1024</span>)
+        req_str = request.decode(<span class="string">'utf-8'</span>)
+        
+        <span class="keyword">if</span> req_str.startswith(<span class="string">'GET / '</span>):
+            <span class="comment"># Renderiza los logs de depuración (FIFO) en orden inverso</span>
+            log_lines = <span class="string">""</span>.join([f<span class="string">'&lt;div class="line"&gt;{l}&lt;/div&gt;'</span> <span class="keyword">for</span> l <span class="keyword">in</span> reversed(logs)])
+            html = f<span class="string">"&lt;html&gt;&lt;body&gt;&lt;h1&gt;Logs de Grúa&lt;/h1&gt;{log_lines}&lt;/body&gt;&lt;/html&gt;"</span>
+            
+            response = <span class="string">"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n"</span> + html
+            <span class="keyword">await</span> writer.awrite(response.encode(<span class="string">'utf-8'</span>))
+    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+        <span class="keyword">pass</span>
+    <span class="keyword">finally</span>:
+        <span class="keyword">await</span> writer.aclose()
+
+<span class="keyword">async def</span> <span class="type">main</span>():
+    asyncio.create_task(uart_reader_task())
+    server = <span class="keyword">await</span> asyncio.start_server(handle_client, <span class="string">'0.0.0.0'</span>, <span class="number">80</span>)
+    led.value(<span class="number">1</span>) <span class="comment"># Encender LED indicando que el AP está listo</span>
+    <span class="keyword">await</span> server.wait_closed()
+
+asyncio.run(main())</code></pre>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN WEBSERIAL API JAVASCRIPT -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span class="accordion-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 18l6-6-6-6M8 6L2 12l6 6"></path></svg>
+                        Navegador Web JavaScript (Uso Asíncrono de Web Serial API sin bloqueo)
+                    </span>
+                    <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="explain-block">
+                        <p>La **Web Serial API** permite al sitio web conectarse directamente al Arduino Nano usando el puerto USB de la laptop. Al ejecutarse asíncronamente con Promises y Async/Await, la comunicación de tramas JSON ocurre de fondo, evitando congelar la interfaz de usuario.</p>
+                    </div>
+                    <pre><code><span class="comment">// Solicitar puerto y establecer conexión asíncrona</span>
+<span class="keyword">async</span> <span class="keyword">function</span> <span class="type">connectSerial</span>() {
+  <span class="keyword">try</span> {
+    <span class="comment">// 1. Abre el cuadro de diálogo nativo del navegador</span>
+    <span class="keyword">const</span> port = <span class="keyword">await</span> navigator.serial.requestPort();
+    <span class="keyword">await</span> port.open({ baudRate: <span class="number">9600</span> });
+    
+    <span class="type">console</span>.log(<span class="string">"Conexión USB establecida con éxito."</span>);
+    
+    <span class="comment">// 2. Iniciar bucle de lectura sin bloquear el hilo principal (Event Loop)</span>
+    <span class="type">readSerialLoop</span>(port);
+  } <span class="keyword">catch</span> (err) {
+    <span class="type">console</span>.error(<span class="string">"Fallo al abrir el puerto serie:"</span>, err);
+  }
+}
+
+<span class="comment">// Envía comandos simples de forma asíncrona</span>
+<span class="keyword">async</span> <span class="keyword">function</span> <span class="type">writeCommand</span>(port, commandText) {
+  <span class="keyword">if</span> (!port || !port.writable) <span class="keyword">return</span>;
+  <span class="keyword">const</span> encoder = <span class="keyword">new</span> <span class="type">TextEncoder</span>();
+  <span class="keyword">const</span> writer = port.writable.getWriter();
+  
+  <span class="comment">// Transmitir comando terminado en salto de línea para Arduino</span>
+  <span class="keyword">await</span> writer.write(encoder.encode(commandText + <span class="string">"\n"</span>));
+  writer.releaseLock();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PESTAÑA 2: ELECTRÓNICA ================= -->
+        <div class="tab-content" id="tab1">
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    </div>
+                    <h2 class="card-title">Mapeo Físico de Hardware y Pines</h2>
+                </div>
+                <div class="explain-block">
+                    <p>La grúa torre emplea un **Arduino Nano** como controlador en tiempo real, conectado a Joysticks analógicos, puente H **TB6612FNG** para controlar los motores de corriente continua de los ejes y un transceptor **ESP32** para diagnóstico serial inalámbrico.</p>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th>Pin Arduino</th>
+                                <th>Tipo de Señal</th>
+                                <th>Descripción / Destino</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Joystick 1 - Carro</strong></td>
+                                <td>A0</td>
+                                <td>Analógico Entrada</td>
+                                <td>Eje X del primer Joystick para traslación horizontal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Joystick 2 - Elevación</strong></td>
+                                <td>A1</td>
+                                <td>Analógico Entrada</td>
+                                <td>Eje X del segundo Joystick para subir/bajar el gancho.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Joystick 1 - Giro</strong></td>
+                                <td>A2</td>
+                                <td>Analógico Entrada</td>
+                                <td>Eje Y del primer Joystick para rotación de la pluma.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Botón Conmutador de Modo</strong></td>
+                                <td>D6</td>
+                                <td>Digital Entrada (Pull-up)</td>
+                                <td>Pulsador integrado en el Joystick de Elevación. Alterna modo físico/web.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Motor A (Carro)</strong></td>
+                                <td>D2, D4, D3 (PWM)</td>
+                                <td>Digital Salidas</td>
+                                <td>AIN1 (D2), AIN2 (D4) dirección; PWMA (D3) velocidad.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Motor B (Elevación)</strong></td>
+                                <td>D7, D8, D5 (PWM)</td>
+                                <td>Digital Salidas</td>
+                                <td>BIN1 (D7), BIN2 (D8) dirección; PWMB (D5) velocidad.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Motor C (Giro)</strong></td>
+                                <td>D11, D12, D9 (PWM)</td>
+                                <td>Digital Salidas</td>
+                                <td>CIN1 (D11), CIN2 (D12) dirección; PWMC (D9) velocidad.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SoftwareSerial Debug TX</strong></td>
+                                <td>D13 (ó D9 en Retos)</td>
+                                <td>Salida Serie 5V</td>
+                                <td>Transmite datos hacia el RX del ESP32 a través del divisor.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SoftwareSerial Debug RX</strong></td>
+                                <td>D10 (ó D12 en Retos)</td>
+                                <td>Entrada Serie</td>
+                                <td>Línea reservada para lectura desde el ESP32 (no usada activamente).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <h2 class="card-title">Divisor de Tensión para Comunicación de 5V a 3.3V</h2>
+                </div>
+                <div class="explain-block">
+                    <p>El Arduino Nano opera con lógica digital de <strong>5V</strong>, lo que significa que su pin de salida D13 (TX de SoftwareSerial) emitirá señales con amplitud de 5V. Sin embargo, el microcontrolador <strong>ESP32 funciona con una lógica de 3.3V</strong> y sus pines de entrada (como el RX2, GPIO 16) no toleran voltajes superiores a 3.6V. Conectarlos directamente destruiría permanentemente el pin del ESP32 o el chip completo.</p>
+                    
+                    <p>Para solucionar esto, se implementa un **Divisor de Tensión Resistivo** compuesto por dos resistencias ($R_1 = 1k\Omega$ y $R_2 = 2k\Omega$) conectadas en serie, que atenúan la amplitud de la señal de 5V a un nivel seguro de 3.33V.</p>
+                    
+                    <div class="ascii-diagram">
+           [ Arduino Nano TX (5V) ]
+                      |
+                      |
+                     [R1] (1k Ohmios)
+                      |
+                      +--------------> [ ESP32 RX2 (GPIO 16) ] (Señal segura a 3.33V)
+                      |
+                     [R2] (2k Ohmios)
+                      |
+                      |
+                    [ GND ] (Tierra Común del Sistema)</div>
+
+                    <div class="highlight-box">
+                        <strong>Fórmula Matemática del Divisor:</strong><br>
+                        $$V_{out} = V_{in} \cdot \frac{R_2}{R_1 + R_2}$$
+                        <br>
+                        Sustituyendo los valores de diseño empleados en el prototipo:<br>
+                        $$V_{out} = 5V \cdot \frac{2000\Omega}{1000\Omega + 2000\Omega} = 5V \cdot \frac{2}{3} = 3.33\text{ V}$$
+                        El voltaje resultante ($3.33\text{V}$) es ideal porque supera el umbral de detección de nivel lógico alto del ESP32 ($V_{IH} \approx 2.4\text{V}$) sin sobrepasar el límite de protección del pin ($3.6\text{V}$).
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+                    </div>
+                    <h2 class="card-title">Aislamiento Crítico de Alimentación (Brownout Prevention)</h2>
+                </div>
+                <div class="explain-block">
+                    <p>Uno de los problemas más frecuentes en la robótica educativa es el <strong>reinicio constante ("brownout")</strong> del microcontrolador al arrancar los motores. Cuando un motor de corriente continua arranca, exige momentáneamente una corriente de pico que puede multiplicar por 3 su corriente de consumo nominal (Corriente de Arranque o "Stall Current").</p>
+                    
+                    <div class="highlight-box">
+                        Si los circuitos lógicos del Arduino y la potencia de los motores comparten la misma fuente (por ejemplo, el puerto USB de la laptop o una batería básica de 9V), esta caída súbita de voltaje hará que la línea de alimentación digital baje de los 4.5V mínimos requeridos por el Nano, provocando que el oscilador se apague y la grúa <strong>se reinicie en bucle infinito</strong>.
+                    </div>
+
+                    <p>Para mitigar esto, el diseño eléctrico de la grúa separa completamente los dos ramales de corriente:</p>
+                    <ul>
+                        <li><strong>Línea Lógica (5V - USB)</strong>: El puerto USB de la laptop alimenta exclusivamente al Arduino Nano, sensores, LEDs y la lógica interna del puente H TB6612FNG (pin VCC). Esto garantiza un voltaje libre de ruido térmico o interferencia inductiva.</li>
+                        <li><strong>Línea de Potencia (9V a 12V - Fuente Externa 2A)</strong>: Conectada directamente al terminal <strong>VM (Motor Voltage)</strong> del puente H TB6612FNG y de allí a los bobinados de los motores. Es capaz de suministrar hasta 2 amperios en picos sin afectar la alimentación del microcontrolador.</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Importante:</strong> Para que las señales lógicas de control del Arduino lleguen correctamente a los transistores del puente H, se deben conectar físicamente **las tierras comunes (GND)** de ambas fuentes en un único nodo.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PESTAÑA 3: ARQUITECTURA ================= -->
+        <div class="tab-content" id="tab2">
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    </div>
+                    <h2 class="card-title">Arquitectura de Comunicación Dual</h2>
+                </div>
+                <div class="explain-block">
+                    <p>El prototipo destaca por su topología de comunicación híbrida, combinando un canal de cableado determinista y un enlace de depuración inalámbrico:</p>
+                    <ol>
+                        <li><strong>Canal Físico USB (Control de Alta Prioridad)</strong>: Enlace directo por cable USB a 9600 bps usando la **Web Serial API**. Garantiza una latencia mínima (&lt; 10ms) y es inmune a las interferencias electromagnéticas del aire. Acepta los comandos de control del operador y transmite telemetría instantánea (como el ángulo de giro calculado en tiempo real).</li>
+                        <li><strong>Canal Wi-Fi (Diagnóstico e Inspección de Baja Prioridad)</strong>: El Arduino Nano replica todos sus mensajes de depuración a través de `SoftwareSerial` hacia el ESP32. El ESP32 funciona como un servidor web HTTP que aloja una terminal retro. El usuario puede conectarse con su celular al SSID AP `ESP32-Grua-Setup` para revisar qué comandos se han ejecutado, fallos detectados o registros de depuración sin perturbar el canal USB de control principal.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
+                    </div>
+                    <h2 class="card-title">Cuadrícula Comparativa de Enlaces de Red</h2>
+                </div>
+                <div class="grid-comparative">
+                    <div class="compare-card">
+                        <div class="compare-card-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+                            Web Serial API (USB)
+                        </div>
+                        <ul class="compare-card-list">
+                            <li><strong>Latencia:</strong> Extremadamente baja (&lt; 5 ms).</li>
+                            <li><strong>Estabilidad:</strong> Máxima. Inmune a interferencias de radiofrecuencia (RF).</li>
+                            <li><strong>Instalación:</strong> Cero drivers. Ejecución directa en Google Chrome / MS Edge.</li>
+                            <li><strong>Seguridad:</strong> Física. Requiere acceso local al puerto USB.</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card">
+                        <div class="compare-card-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.59 16a7.5 7.5 0 0 1 6.82 0M12 20h.01"></path></svg>
+                            Web Sockets (Wi-Fi)
+                        </div>
+                        <ul class="compare-card-list">
+                            <li><strong>Latencia:</strong> Baja a media (15-50 ms según calidad del enlace inalámbrico).</li>
+                            <li><strong>Estabilidad:</strong> Variable. Depende de la atenuación del aire e interferencias en banda 2.4GHz.</li>
+                            <li><strong>Conexión:</strong> Inalámbrica bidireccional continua (Full-Duplex).</li>
+                            <li><strong>Consumo:</strong> Elevado debido a la potencia del transceptor Wi-Fi.</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card">
+                        <div class="compare-card-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                            HTTP / REST (Wi-Fi)
+                        </div>
+                        <ul class="compare-card-list">
+                            <li><strong>Latencia:</strong> Media a alta (50-200 ms por cabeceras y Handshake TCP).</li>
+                            <li><strong>Estabilidad:</strong> Adecuada para lecturas esporádicas y telemetría pasiva.</li>
+                            <li><strong>Protocolo:</strong> Unidireccional impulsado por cliente (Request-Response).</li>
+                            <li><strong>Uso en Grúa:</strong> Utilizado en el celular para leer la cola circular de logs UART.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR DE 3 FLASHCARDS GIRATORIAS 3D -->
+            <div class="header-title-container" style="margin-top: 25px;">
+                <h3 class="header-subtitle" style="text-transform: uppercase; font-weight: 800; color: var(--accent-secondary); letter-spacing: 0.5px;">Flashcards Giratorias 3D de Conceptos Clave</h3>
+            </div>
+            <div class="flashcards-container">
+                <!-- Tarjeta 1 -->
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="flashcard-title">1. Web Serial API</div>
+                        <p class="flashcard-description">¿Cómo interactúa la web con el Arduino sin usar un servidor local?</p>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <p class="flashcard-description">Es una API de JavaScript nativa de navegadores Chromium que permite al navegador abrir canales directos de lectura y escritura con dispositivos serie USB (como Arduino) de forma asíncrona, eliminando la necesidad de instalar Node.js u otros servidores locales en la laptop de control.</p>
+                    </div>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="flashcard-title">2. SoftwareSerial</div>
+                        <p class="flashcard-description">¿Qué limitaciones tiene y para qué sirve en este prototipo?</p>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <p class="flashcard-description">Es una biblioteca que emula un puerto serie por software en pines digitales normales. Se utiliza para redirigir los logs de depuración hacia el ESP32, dejando libre el puerto UART nativo (pines D0/D1) del Arduino, evitando cortocircuitos al cargar firmware por cable USB.</p>
+                    </div>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="flashcard-title">3. Estabilidad ESP32</div>
+                        <p class="flashcard-description">¿Cómo mitigamos errores OutOfMemory en el servidor MicroPython?</p>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <p class="flashcard-description">MicroPython maneja memoria RAM limitada. Mitigamos fugas usando un buffer circular FIFO rígido limitado a 50 líneas de registros y liberando los sockets de red HTTP de forma inmediata al responder (`writer.aclose()`), forzando al recolector de basura (`gc.collect()`) en intervalos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PESTAÑA 4: PRUEBAS Y SEGURIDAD ================= -->
+        <div class="tab-content" id="tab3">
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h2 class="card-title">Mecanismo de Seguridad: Watchdog por Software</h2>
+                </div>
+                <div class="explain-block">
+                    <p>En el control inalámbrico o cableado de maquinaria pesada, un fallo de conexión o la desconexión física del cable USB del operador con los motores encendidos podría causar un desastre (por ejemplo, el motor del carro moviéndose de forma indefinida hacia el límite físico de la pluma).</p>
+                    
+                    <div class="highlight-box">
+                        Para prevenir esto, se implementa un **Watchdog por Software** (Perro guardián de inactividad):
+                        <ol style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>Latido Periódico (Heartbeat)</strong>: La interfaz web del navegador envía automáticamente un carácter o comando leve cada <strong>250 milisegundos</strong> al Arduino Nano.</li>
+                            <li><strong>Temporizador en Arduino</strong>: El Arduino mantiene actualizado un contador de tiempo (`lastCommandTime = millis()`) cada vez que recibe un comando válido por serie.</li>
+                            <li><strong>Apagado de Emergencia (Timeout)</strong>: En cada ciclo del bucle `loop()`, el Arduino evalúa la diferencia de tiempo: `if (millis() - lastCommandTime > 500)`. Si transcurren **más de 500 ms** sin recibir comunicación del navegador, el Arduino asume pérdida de enlace y de inmediato corta el paso de energía a todos los motores (`stopAllMotors()`).</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.59 16a7.5 7.5 0 0 1 6.82 0M12 20h.01"></path></svg>
+                    </div>
+                    <h2 class="card-title">Procedimiento de Validación del Monitor Inalámbrico</h2>
+                </div>
+                <div class="explain-block">
+                    <p>Para comprobar que el módulo de depuración inalámbrica funciona correctamente, se sigue la siguiente secuencia de validación física en campo:</p>
+                    
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Paso</th>
+                                    <th>Acción del Operador</th>
+                                    <th>Respuesta Esperada en el Sistema</th>
+                                    <th>Criterio de Éxito / LED Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1</strong></td>
+                                    <td>Energizar la grúa torre (Conectar puerto USB y transformador de potencia).</td>
+                                    <td>El Arduino Nano enciende. El ESP32 se arranca en modo Access Point.</td>
+                                    <td>El LED azul del ESP32 destella 3 veces y luego se queda <strong>encendido fijo</strong>, indicando red Wi-Fi activa.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2</strong></td>
+                                    <td>Abrir la configuración Wi-Fi en el smartphone y buscar redes.</td>
+                                    <td>Debería aparecer en la lista la red AP broadcasted por el microcontrolador.</td>
+                                    <td>Conectarse con éxito al SSID AP: <strong><code>ESP32-Grua-Setup</code></strong> (sin contraseña o clave configurada).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3</strong></td>
+                                    <td>Abrir el navegador Chrome en el celular y acceder a la dirección IP de pasarela.</td>
+                                    <td>El celular solicita una página web HTTP en el puerto 80 del ESP32.</td>
+                                    <td>Acceder a la IP: <strong><code>192.168.4.1</code></strong>. Carga con éxito el frontend de consola terminal retro.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4</strong></td>
+                                    <td>Enviar comandos de prueba desde la Laptop (por el cable USB).</td>
+                                    <td>El Arduino los procesa y paralelamente escribe el log por SoftwareSerial hacia el ESP32.</td>
+                                    <td>En el celular se despliega instantáneamente en verde: <code>[CMD] Carro a la IZQUIERDA</code>, <code>[SYSTEM] Modo cambiado a WEB</code>, etc.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PESTAÑA 5: GUIÓN DE EXPOSICIÓN ================= -->
+        <div class="tab-content" id="tab4">
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    </div>
+                    <h2 class="card-title">Matriz de Exposición Grupal (Guión Secuencial 4x4)</h2>
+                </div>
+                <div class="explain-block">
+                    <p>Para asegurar una defensa técnica coordinada e impecable, los 4 integrantes del grupo se reparten la exposición en un orden secuencial riguroso, abarcando un subtema técnico por cada categoría. Haz clic en los botones de filtro a continuación para resaltar las líneas de un integrante en particular o filtrar por categoría técnica.</p>
+                </div>
+
+                <div class="expo-matrix-wrapper">
+                    <!-- Controles interactivos de filtrado -->
+                    <div class="expo-controls">
+                        <button class="expo-filter-btn active" onclick="filterExpo('all')">Ver Todo el Guión</button>
+                        <button class="expo-filter-btn" onclick="filterExpo('Matias')">Matias Chisaguano</button>
+                        <button class="expo-filter-btn" onclick="filterExpo('Erwin')">Erwin Zambrano</button>
+                        <button class="expo-filter-btn" onclick="filterExpo('Camila')">Camila Lusca</button>
+                        <button class="expo-filter-btn" onclick="filterExpo('Milagros')">Milagros Llusca</button>
+                    </div>
+
+                    <div class="expo-grid" id="expoGrid">
+                        <!-- Intervención 1: Matias (Diseño) -->
+                        <div class="expo-item" data-speaker="Matias" data-cat="diseno">
+                            <span class="expo-order-tag">01</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Matias Chisaguano 
+                                    <span class="expo-speaker-role">Coordinador / Redes</span>
+                                </span>
+                                <span class="expo-category-badge badge-diseno">Diseño y Arquitectura</span>
+                            </div>
+                            <div class="expo-script">
+                                "Buenos días, señores del tribunal. Yo actuaré como coordinador del grupo y les presentaré la **arquitectura del sistema dual de la grúa torre**. Nuestro diseño resuelve la latencia crítica de control mediante un canal físico USB por Web Serial API para el operario de la laptop, mientras que de forma paralela levantamos una red inalámbrica Wi-Fi independiente usando un ESP32 para que ingenieros de diagnóstico analicen logs en tiempo real."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 2: Erwin (Diseño/Frontend) -->
+                        <div class="expo-item" data-speaker="Erwin" data-cat="diseno">
+                            <span class="expo-order-tag">02</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Erwin Zambrano
+                                    <span class="expo-speaker-role">Desarrollador Frontend</span>
+                                </span>
+                                <span class="expo-category-badge badge-diseno">Diseño y Arquitectura</span>
+                            </div>
+                            <div class="expo-script">
+                                "En el apartado del frontend, he diseñado una **interfaz de panel de control web totalmente responsiva y autocontenida** utilizando CSS glassmorphism. El panel incluye una brújula en SVG dinámico para proyectar la orientación de la pluma. Como no dependemos de librerías ni de internet, el panel opera 100% offline, permitiendo controlar la grúa desde cualquier laptop de campo mediante un simple navegador web."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 3: Camila (Electrónica) -->
+                        <div class="expo-item" data-speaker="Camila" data-cat="electro">
+                            <span class="expo-order-tag">03</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Camila Lusca
+                                    <span class="expo-speaker-role">Especialista en Hardware</span>
+                                </span>
+                                <span class="expo-category-badge badge-electro">Electrónica e Instrumentación</span>
+                            </div>
+                            <div class="expo-script">
+                                "En cuanto al hardware, me encargué del mapeo de voltajes y la estabilidad eléctrica. He diseñado la **separación física de alimentación**: una línea lógica aislada de 5V por puerto USB y una fuente externa de 9V a 2A conectada al terminal VM del puente H TB6612FNG para los motores. Esto elimina las caídas de tensión bruscas en picos de corriente, previniendo reinicios accidentales del microcontrolador."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 4: Milagros (Electrónica) -->
+                        <div class="expo-item" data-speaker="Milagros" data-cat="electro">
+                            <span class="expo-order-tag">04</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Milagros Llusca
+                                    <span class="expo-speaker-role">Hardware y Montaje</span>
+                                </span>
+                                <span class="expo-category-badge badge-electro">Electrónica e Instrumentación</span>
+                            </div>
+                            <div class="expo-script">
+                                "Para garantizar que el enlace de 5V del Arduino Nano no dañara las entradas lógicas de 3.3V del ESP32, implementé un **divisor de tensión resistivo de 1kΩ y 2kΩ** en la línea TX. Aplicando la fórmula matemática, convertimos la señal digital de 5V en una señal segura de 3.33V tolerada por el GPIO 16 (RX2), logrando un puente de comunicación bidireccional limpio y seguro."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 5: Erwin (Programación) -->
+                        <div class="expo-item" data-speaker="Erwin" data-cat="progra">
+                            <span class="expo-order-tag">05</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Erwin Zambrano
+                                    <span class="expo-speaker-role">Desarrollador Frontend</span>
+                                </span>
+                                <span class="expo-category-badge badge-progra">Programación y Firmware</span>
+                            </div>
+                            <div class="expo-script">
+                                "Desde el navegador, implementé la lógica asíncrona de **Web Serial API**. Utilizo flujos de lectura `ReadableStream` y escritura `WritableStream` con decodificadores de texto en tiempo real. Esto permite capturar la trama JSON de telemetría proveniente de la grúa y rotar la aguja de la pluma de forma fluida a 60 FPS, sin congelar el hilo principal del renderizado web."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 6: Matias (Programación) -->
+                        <div class="expo-item" data-speaker="Matias" data-cat="progra">
+                            <span class="expo-order-tag">06</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Matias Chisaguano
+                                    <span class="expo-speaker-role">Coordinador / Redes</span>
+                                </span>
+                                <span class="expo-category-badge badge-progra">Programación y Firmware</span>
+                            </div>
+                            <div class="expo-script">
+                                "En el ESP32, desarrollé el firmware asíncrono en **MicroPython** usando `uasyncio`. Para garantizar la estabilidad a largo plazo y evitar fugas de memoria RAM, programé un buffer circular FIFO estricto de máximo 50 líneas. Al entrar una nueva cadena por la UART2, la FIFO descarta el registro más antiguo de la memoria RAM de manera inmediata, eliminando los fallos por OutOfMemory."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 7: Camila (Programación) -->
+                        <div class="expo-item" data-speaker="Camila" data-cat="progra">
+                            <span class="expo-order-tag">07</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Camila Lusca
+                                    <span class="expo-speaker-role">Especialista en Hardware</span>
+                                </span>
+                                <span class="expo-category-badge badge-progra">Programación y Firmware</span>
+                            </div>
+                            <div class="expo-script">
+                                "Por parte del firmware del Arduino Nano, implementé la variable lógica **<code>manualMode</code> de control exclusivo**. Si está en modo Web, los potenciómetros analógicos (A0-A3) se desactivan. Si se presiona el botón físico, cambia a modo Manual, frena todos los motores y atiende solo a los Joysticks físicos. Este interbloqueo lógico previene que comandos en conflicto compitan por el puente H."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 8: Milagros (Pruebas) -->
+                        <div class="expo-item" data-speaker="Milagros" data-cat="pruebas">
+                            <span class="expo-order-tag">08</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Milagros Llusca
+                                    <span class="expo-speaker-role">Hardware y Montaje</span>
+                                </span>
+                                <span class="expo-category-badge badge-pruebas">Pruebas y Seguridad</span>
+                            </div>
+                            <div class="expo-script">
+                                "Para garantizar la seguridad operacional, codificamos un **Watchdog de seguridad por software**. Si el cable USB del navegador se desconecta físicamente o el software de control colapsa, el latido constante de 250 ms que envía el navegador se detendrá. Al detectar esta ausencia de señal por más de 500 ms, el Arduino frena automáticamente los tres motores en milisegundos."
+                            </div>
+                        </div>
+
+                        <!-- Intervención 9: Matias (Pruebas) -->
+                        <div class="expo-item" data-speaker="Matias" data-cat="pruebas">
+                            <span class="expo-order-tag">09</span>
+                            <div class="expo-item-meta">
+                                <span class="expo-speaker">
+                                    Matias Chisaguano
+                                    <span class="expo-speaker-role">Coordinador / Redes</span>
+                                </span>
+                                <span class="expo-category-badge badge-pruebas">Pruebas y Seguridad</span>
+                            </div>
+                            <div class="expo-script">
+                                "Finalmente, realizamos las pruebas de validación en campo. Levantamos la red Wi-Fi de depuración y pudimos conectarnos desde un celular móvil al SSID AP `ESP32-Grua-Setup` abriendo la IP `192.168.4.1`. Los logs seriales de depuración transmitidos por el Nano por su salida `debugSerial(10, 13)` se visualizaron perfectamente en la pantalla táctil en formato web retro, confirmando el éxito del diagnóstico."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PESTAÑA 6: QUIZ Y BANCO DE PREGUNTAS ================= -->
+        <div class="tab-content" id="tab5">
+            
+            <!-- EXPOSICIÓN DE QUIZ INTERACTIVO -->
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </div>
+                    <h2 class="card-title">Cuestionario Evaluativo de Exposición</h2>
+                </div>
+                
+                <div class="quiz-container">
+                    <!-- Pregunta 1 -->
+                    <div class="quiz-question-card" id="q1">
+                        <div class="quiz-q-num">Pregunta 1 de 4</div>
+                        <div class="quiz-q-text">¿Cuál es el propósito fundamental de la variable lógica "manualMode" en el firmware de Arduino Nano?</div>
+                        <div class="quiz-options">
+                            <button class="quiz-opt-btn" onclick="checkAnswer(1, 0, 1, '¡Exacto! Al alternar manualMode a true o false se establece un control exclusivo, impidiendo que el Arduino Nano intente atender los joysticks físicos y los comandos USB web al mismo tiempo, lo que generaría corrientes transitorias peligrosas o movimientos erráticos en los motores.')">
+                                A) Aumentar la resolución de lectura de los Joysticks analógicos en A0-A3.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(1, 1, 1, '¡Exacto! Al alternar manualMode a true o false se establece un control exclusivo, impidiendo que el Arduino Nano intente atender los joysticks físicos y los comandos USB web al mismo tiempo, lo que generaría corrientes transitorias peligrosas o movimientos erráticos en los motores.')">
+                                B) Evitar la colisión de comandos actuando como un conmutador de exclusión mutua de control.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(1, 2, 1, '¡Exacto! Al alternar manualMode a true o false se establece un control exclusivo, impidiendo que el Arduino Nano intente atender los joysticks físicos y los comandos USB web al mismo tiempo, lo que generaría corrientes transitorias peligrosas o movimientos erráticos en los motores.')">
+                                C) Resetear el ESP32 mediante hardware ante fugas de memoria RAM.
+                            </button>
+                        </div>
+                        <div class="explanation-box" id="exp1"></div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="quiz-question-card" id="q2">
+                        <div class="quiz-q-num">Pregunta 2 de 4</div>
+                        <div class="quiz-q-text">¿Por qué es indispensable conectar un divisor de tensión resistivo en el pin TX de depuración del Arduino Nano hacia el pin RX2 del ESP32?</div>
+                        <div class="quiz-options">
+                            <button class="quiz-opt-btn" onclick="checkAnswer(2, 0, 2, '¡Correcto! El ESP32 es un microcontrolador que opera estrictamente a 3.3V en sus GPIOs. Si se le inyectan los 5V de salida del Arduino Nano directamente, se sobrepasará la tensión máxima tolerable quemando las celdas de silicio del receptor.')">
+                                A) Para elevar la amplitud de la señal de 3.3V a 5V para que sea detectada por el receptor.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(2, 1, 2, '¡Correcto! El ESP32 es un microcontrolador que opera estrictamente a 3.3V en sus GPIOs. Si se le inyectan los 5V de salida del Arduino Nano directamente, se sobrepasará la tensión máxima tolerable quemando las celdas de silicio del receptor.')">
+                                B) Para incrementar la tasa de baudios de transmisión de 9600 a 115200 de forma puramente física.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(2, 2, 2, '¡Correcto! El ESP32 es un microcontrolador que opera estrictamente a 3.3V en sus GPIOs. Si se le inyectan los 5V de salida del Arduino Nano directamente, se sobrepasará la tensión máxima tolerable quemando las celdas de silicio del receptor.')">
+                                C) Para atenuar la tensión de la señal lógica de 5V a 3.3V y evitar daños permanentes en el ESP32.
+                            </button>
+                        </div>
+                        <div class="explanation-box" id="exp2"></div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div class="quiz-question-card" id="q3">
+                        <div class="quiz-q-num">Pregunta 3 de 4</div>
+                        <div class="quiz-q-text">¿Cómo se evita eléctricamente el fallo por "Brownout" (reinicio de CPU) en el Arduino Nano al encender la grúa torre?</div>
+                        <div class="quiz-options">
+                            <button class="quiz-opt-btn" onclick="checkAnswer(3, 0, 0, '¡Brillante! Separar la alimentación es crítico. Al alimentar los motores mediante una fuente externa de 9V/2A y dejar la lógica digital en los 5V aislados del USB de la laptop, la gran caída de tensión en el arranque del motor no arrastra la alimentación del microcontrolador.')">
+                                A) Aislado por completo la alimentación: 5V lógico (USB) y una fuente externa de 9V a 2A para los motores.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(3, 1, 0, '¡Brillante! Separar la alimentación es crítico. Al alimentar los motores mediante una fuente externa de 9V/2A y dejar la lógica digital en los 5V aislados del USB de la laptop, la gran caída de tensión en el arranque del motor no arrastra la alimentación del microcontrolador.')">
+                                B) Conectando todas las tierras y alimentación de motores al pin de salida de 3.3V del Arduino Nano.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(3, 2, 0, '¡Brillante! Separar la alimentación es crítico. Al alimentar los motores mediante una fuente externa de 9V/2A y dejar la lógica digital en los 5V aislados del USB de la laptop, la gran caída de tensión en el arranque del motor no arrastra la alimentación del microcontrolador.')">
+                                C) Modificando el código de MicroPython del ESP32 para elevar la frecuencia de reloj.
+                            </button>
+                        </div>
+                        <div class="explanation-box" id="exp3"></div>
+                    </div>
+
+                    <!-- Pregunta 4 -->
+                    <div class="quiz-question-card" id="q4">
+                        <div class="quiz-q-num">Pregunta 4 de 4</div>
+                        <div class="quiz-q-text">¿Cuál es el mecanismo de seguridad (Watchdog) implementado para mitigar una pérdida de conexión de la laptop con la grúa?</div>
+                        <div class="quiz-options">
+                            <button class="quiz-opt-btn" onclick="checkAnswer(4, 0, 1, '¡Excelente! El Watchdog por software de 500 ms detiene el sistema al instante si el envío constante de caracteres del navegador (cada 250 ms) se interrumpe por caída física del cable.')">
+                                A) El ESP32 detecta la desconexión del celular y corta inmediatamente la corriente alterna de la pared.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(4, 1, 1, '¡Excelente! El Watchdog por software de 500 ms detiene el sistema al instante si el envío constante de caracteres del navegador (cada 250 ms) se interrumpe por caída física del cable.')">
+                                B) La web envía comandos cada 250ms; si el Arduino no recibe nada en 500ms detiene todos los motores.
+                            </button>
+                            <button class="quiz-opt-btn" onclick="checkAnswer(4, 2, 1, '¡Excelente! El Watchdog por software de 500 ms detiene el sistema al instante si el envío constante de caracteres del navegador (cada 250 ms) se interrumpe por caída física del cable.')">
+                                C) Los condensadores del divisor de tensión resistivo descargan corriente para frenar físicamente la inercia del giro.
+                            </button>
+                        </div>
+                        <div class="explanation-box" id="exp4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RETOS PRÁCTICOS DE INGENIERÍA -->
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    </div>
+                    <h2 class="card-title">Retos Prácticos de Ingeniería (Defensa Técnica)</h2>
+                </div>
+                <div class="explain-block">
+                    <p>En el tribunal de defensa del proyecto de grado es común que propongan modificaciones físicas o de código sobre los planos de <code>schema.html</code>. Repasa a continuación 3 retos prácticos clave:</p>
+                </div>
+
+                <!-- Reto 1 -->
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title"><strong>Reto 1:</strong> Reasignar el pulsador físico de modo del Joystick de A3 a D13</span>
+                        <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="explain-block">
+                            <strong>Implicaciones Electrónicas y Solución:</strong>
+                            <p style="margin-top: 10px;">1. **Implicación Electrónica**: El pin digital D13 del Arduino Nano está conectado internamente en la placa a un diodo LED SMD de estado con una resistencia limitadora. Al usar D13 como entrada digital con resistencia pull-up interna (`INPUT_PULLUP`), la presencia del LED integrado en la línea actúa como una carga en paralelo a tierra, lo que puede provocar que el pin nunca registre un estado lógico ALTO completo (se quede flotando en alrededor de 1.7V a 2.5V en lugar de los 5V ideales). Para solucionarlo de forma robusta, se prefiere soldar un **resistor pull-up físico externo de 4.7kΩ** conectado a VCC.</p>
+                            <p style="margin-top: 8px;">2. **Modificación del código de Arduino C++**:</p>
+                            <pre><code><span class="comment">// Antes: #define BTN_MODE A3 o D6</span>
+<span class="keyword">#define</span> BTN_MODE <span class="number">13</span> <span class="comment">// Nueva asignación física</span>
+
+<span class="type">void</span> <span class="type">setup</span>() {
+  <span class="comment">// Configuración con resistencia pull-up de seguridad en pin D13</span>
+  <span class="type">pinMode</span>(BTN_MODE, <span class="type">INPUT_PULLUP</span>);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reto 2 -->
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title"><strong>Reto 2:</strong> Reasignar el TX de SoftwareSerial al pin D10 y modificar el divisor de tensión</span>
+                        <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="explain-block">
+                            <strong>Implicaciones Electrónicas y Solución:</strong>
+                            <p style="margin-top: 10px;">1. **Implicación Electrónica**: Al reasignar el canal de depuración por software, la señal de transmisión de 5V ahora sale por D10. Debemos desconectar físicamente la línea del pin antiguo D13 y soldar la entrada del divisor de tensión en D10. Los valores de las resistencias del divisor de tensión **no necesitan modificarse** (1kΩ y 2kΩ se mantienen), ya que la amplitud de salida lógica en D10 sigue siendo de 5V en un Arduino Nano. Sin embargo, hay que tener extremo cuidado con no colisionar con la línea de transmisión USB del programador SPI o puerto de carga de firmware.</p>
+                            <p style="margin-top: 8px;">2. **Modificación del código de Arduino C++**:</p>
+                            <pre><code><span class="keyword">#include</span> <span class="string">&lt;SoftwareSerial.h&gt;</span>
+<span class="comment">// Antes: SoftwareSerial debugSerial(10, 13); (donde 13 era TX)</span>
+<span class="comment">// Ahora: Asignar D9 como RX (no usado) y D10 como TX</span>
+<span class="type">SoftwareSerial</span> <span class="type">debugSerial</span>(<span class="number">9</span>, <span class="number">10</span>); 
+
+<span class="type">void</span> <span class="type">setup</span>() {
+  debugSerial.<span class="type">begin</span>(<span class="number">9600</span>);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reto 3 -->
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title"><strong>Reto 3:</strong> Mover el pin PWM de Elevación de D6 a D3 e intercambiarlo con el Carro</span>
+                        <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="explain-block">
+                            <strong>Implicaciones Electrónicas y Solución:</strong>
+                            <p style="margin-top: 10px;">1. **Implicación Electrónica**: El ATmega328P del Arduino Nano agrupa sus salidas PWM en temporizadores de hardware internos (Timer0: D5, D6; Timer1: D9, D10; Timer2: D3, D11). El Timer0 también controla funciones nativas del microcontrolador como `millis()` y `delay()`. Mover el motor de Elevación a D3 e intercambiarlo con el Carro a D6 libera al Carro de posibles interferencias del Timer0 y redistribuye las frecuencias PWM. En el cableado del prototipo, debemos conmutar físicamente los cables de señal lógica hacia los pines del puente H TB6612FNG (PWMA y PWMB).</p>
+                            <p style="margin-top: 8px;">2. **Modificación del código de Arduino C++**:</p>
+                            <pre><code><span class="comment">// Antes: PWMA (Carro) = D3, PWMB (Elevación) = D5 o D6</span>
+<span class="comment">// Intercambio físico y lógico de pines PWM de control de velocidad:</span>
+<span class="keyword">#define</span> PWMA <span class="number">6</span> <span class="comment">// Motor Carro ahora en D6 (Timer0)</span>
+<span class="keyword">#define</span> PWMB <span class="number">3</span> <span class="comment">// Motor Elevación ahora en D3 (Timer2)</span>
+
+<span class="type">void</span> <span class="type">setup</span>() {
+  <span class="type">pinMode</span>(PWMA, <span class="type">OUTPUT</span>);
+  <span class="type">pinMode</span>(PWMB, <span class="type">OUTPUT</span>);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= BANCO DE PREGUNTAS TEÓRICAS Y RETOS ================= -->
+            <div class="card">
+                <div class="card-header-inner">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                    <h2 class="card-title">Banco Completo de Preguntas Teóricas y de Diseño</h2>
+                </div>
+                <div class="explain-block">
+                    <p>Banco interactivo colapsable con buscador en tiempo real y filtro por categoría temática. Excelente para que los integrantes del grupo ensayen respuestas antes de la ronda de preguntas individuales.</p>
+                </div>
+
+                <!-- Barra de búsqueda y filtrado interactivo -->
+                <div class="filter-section">
+                    <div class="search-input-wrapper">
+                        <!-- Icono SVG Lupa -->
+                        <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="search-input" id="searchField" oninput="filterQuestionBank()" placeholder="Buscar por palabra clave (ej: brownout, serial, etc.)...">
+                    </div>
+                    <div>
+                        <select class="category-select" id="categoryFilter" onchange="filterQuestionBank()">
+                            <option value="all">Todas las Categorías</option>
+                            <option value="teoricas">Preguntas Teóricas (20)</option>
+                            <option value="retos">Retos de Diseño Práctico (4)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Listado de Preguntas Filtrables por JS -->
+                <div class="bank-list" id="questionBank">
+
+                    <!-- ================= 20 PREGUNTAS TEÓRICAS ================= -->
+                    
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="baudios serial comunicación velocidad bits">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T1.</span> ¿Qué significa configurar la velocidad serie a 9600 baudios en el sistema?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Significa que se transmiten aproximadamente 9600 bits por segundo a través de la línea de datos. Esta velocidad es ideal para entornos ruidosos en robótica porque asegura un bajo índice de error de trama y es perfectamente compatible tanto con la emulación por software en el Nano como con el UART por hardware del ESP32.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="web serial api compatibilidad navegador chrome edge">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T2.</span> ¿Qué navegadores soportan nativamente la Web Serial API?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Es soportada por navegadores basados en el motor Chromium, tales como Google Chrome, Microsoft Edge y Opera. Navegadores como Firefox y Safari no la implementan activamente por políticas internas de seguridad respecto al acceso directo a hardware del cliente.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="tb6612fng l298n puente h eficiencia calor perdida">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T3.</span> ¿Qué ventajas tiene el puente H TB6612FNG frente al clásico L298N?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">El TB6612FNG está basado en transistores MOSFET, lo que le confiere una caída de voltaje interna bajísima y una alta eficiencia térmica. El L298N usa transistores bipolares que disipan mucha energía en forma de calor y restan cerca de 1.5V a 2V a los motores.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="uasyncio asincrono multiprocesamiento bloqueo esp32">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T4.</span> ¿Por qué es vital usar uasyncio en el firmware del ESP32?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Porque el ESP32 debe realizar dos tareas concurrentes de forma continua: atender solicitudes HTTP web en el puerto 80 y leer tramas por la UART. Usar sockets tradicionales de red bloquearía la CPU del ESP32 esperando datos, deteniendo la lectura del puerto serie. Con `uasyncio`, las tareas ceden el control mientras esperan datos, permitiendo multitarea cooperativa fluida.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="gnd tierra comun puente h referencia">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T5.</span> ¿Qué sucede si olvidamos unificar las tierras (GND) lógica y de potencia?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Si no se conectan los terminales GND de ambas fuentes a un punto común, las señales de control PWM enviadas por el Arduino Nano hacia los pines de entrada del puente H no tendrán una referencia estable de retorno. Esto causará que los motores no enciendan o se comporten de forma errática debido al ruido digital.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="debouncing antirrebote fisico software mills">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T6.</span> ¿Qué es el "debounce" y por qué se requiere en el pin del pulsador D6?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Los pulsadores mecánicos tienen laminas metálicas internas que rebotan microscópicamente durante 10 a 50 ms al ser presionados. Para el microcontrolador (que corre a 16 MHz), esto parece como si el usuario presionara el botón cientos de veces por segundo. El debounce por software (usando `millis()`) filtra estos rebotes falsos exigiendo que el estado se mantenga estable por 50 ms antes de validar la pulsación.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="pwm ciclo de trabajo velocidad ancho de pulso">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T7.</span> ¿Cómo funciona el control PWM en los motores de corriente continua?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">La modulación por ancho de pulso (PWM) conmuta el encendido y apagado de la señal de alimentación a una frecuencia muy alta (normalmente a 490Hz o 980Hz). Modificando la relación entre el tiempo encendido (ON) y apagado (OFF) en el rango de 0 a 255 ("Duty Cycle" o ciclo de trabajo), se regula el valor de tensión promedio efectivo que recibe el devanado del motor, controlando su velocidad con precisión.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="deadzone zona muerta joystick ruido drift">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T8.</span> ¿Qué es la "Zona Muerta" analógica y para qué sirve en el Joystick?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Los Joysticks potenciómetricos físicos rara vez regresan a su punto medio exacto de tensión (2.5V o valor ADC 512) debido a tolerancias del resorte interno y vibración ("drift"). La zona muerta es un umbral lógico configurado en el código (por ejemplo, ±80 unidades de lectura digital) en el cual no se genera ningún comando de movimiento. Esto previene vibraciones y movimientos lentos indeseados de los motores en reposo.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="json tramas serial index html angulo">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T9.</span> ¿Por qué transmitimos telemetría en formato JSON por puerto serie?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Porque JSON es un formato estándar, auto-descriptivo y extremadamente fácil de analizar ("parsear") en JavaScript nativo del navegador mediante `JSON.parse()`. Esto permite enviar estructuras complejas como `{"angle": 45, "mode": "web"}` que el navegador puede mapear a variables visuales directamente en una sola línea de código.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="software serial debug limites pines cpu nano">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T10.</span> ¿Qué limitaciones tiene la biblioteca SoftwareSerial frente a la UART nativa?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">SoftwareSerial consume tiempo de procesador en el bucle principal porque la CPU del microcontrolador debe leer/escribir cada bit mediante interrupciones de temporización. Además, no es recomendable utilizar tasas de baudios superiores a 38400 bps debido a la pérdida de sincronía por interrupciones concurrentes de otros temporizadores.</p>
+                        </div>
+                    </div>
+
+                    <!-- Preguntas 11 a 20 (Para completar las 20 teóricas requeridas) -->
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="latencia puerto serie usb bluetooth wifi velocidad">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T11.</span> ¿Por qué se prefiere el puerto serie físico sobre conexiones inalámbricas para control de la grúa?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Por determinismo operacional y latencia. Un enlace físico USB tiene tiempos de respuesta inferiores a los 5 milisegundos y un enlace garantizado 100% libre de congestión espectral, factores indispensables al manipular carga suspendida en una grúa real.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="esp32 access point estacion ip mascara">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T12.</span> ¿Cuál es la diferencia entre modo Access Point (AP) y modo Station (STA) en el ESP32?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">En modo Access Point (AP), el ESP32 emite su propia señal de red inalámbrica y asigna direcciones IP a los celulares que se le conecten (como la IP por defecto 192.168.4.1). En modo Station (STA), el ESP32 actúa como un cliente que busca y se conecta a un router Wi-Fi doméstico o red externa preexistente.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="pull up pull down resistencias logicas ruido">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T13.</span> ¿Por qué se usa pull-up interna en lugar de dejar el pin del pulsador flotando?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Si un pin digital configurado como entrada se queda flotando sin ninguna resistencia que lo ancle a VCC o a GND, actuará como una antena microscópica sensible al ruido electromagnético ambiental de la red eléctrica u otros cables del motor. Esto provocaría lecturas falsas de activación. El pull-up lo ancla a 5V de forma predeterminada asegurando un estado lógico estable hasta que el pulsador cierre el circuito a masa.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="tb6612fng standby freno parada motores">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T14.</span> ¿Cuál es la función del pin STBY (Standby) del puente H TB6612FNG?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">El pin STBY apaga por completo las etapas de potencia del puente H, reduciendo el consumo de corriente a niveles ínfimos y liberando los transistores para dejar los motores sueltos. Debe estar conectado a un pin digital en estado lógico ALTO (5V) para activar el controlador de motores.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="estimacion angulo integracion numerica velocidad tiempo">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T15.</span> ¿Cómo calcula el Arduino el ángulo de rotación de la pluma sin encoder físico?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Mediante integración numérica en base a tiempo: sabemos que a velocidad de PWM máxima (255) el motor del engranaje gira a 30 RPM (o 180° por segundo). En el `loop()`, se calcula el diferencial de tiempo (`dt` en milisegundos) transcurrido entre iteraciones y se multiplica por el factor de velocidad de PWM actual, acumulando el resultado en una variable flotante de ángulo de 0 a 360 grados.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="buffer fifo pila memoria cola circular">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T16.</span> ¿Qué significa que una cola de datos sea de tipo FIFO?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">FIFO significa "First-In, First-Out" (Primero en Entrar, Primero en Salir). En nuestra cola de depuración en MicroPython, al alcanzar el límite de 50 registros en RAM, la inserción de una nueva traza de logs obliga a la cola a descartar automáticamente la traza más vieja en base al índice cero (`logs.pop(0)`), manteniendo la consola de diagnóstico actualizada sin devorar la memoria del ESP32.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="glassmorphism diseno css desenfoque trans traslucido">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T17.</span> ¿Qué propiedades CSS clave habilitan el efecto estético de glassmorphism?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Las propiedades fundamentales son: un fondo de color semitransparente (ej. `background: rgba(255, 255, 255, 0.1)`), un borde muy sutil y claro para acentuar el borde de cristal, y sobre todo la propiedad **`backdrop-filter: blur(12px)`** que se encarga de difuminar de forma nativa todo el contenido gráfico situado por detrás del elemento.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="brownout capacitor condensador filtro tension pico">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T18.</span> ¿Qué es un condensador de desacoplo y cómo ayuda a estabilizar la potencia?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Es un condensador electrolítico de alta capacidad (ej: 470µF a 1000µF) conectado en paralelo a los terminales de alimentación del puente H. Actúa como un pequeño acumulador de energía instantánea de alta velocidad: cuando el motor arranca y exige corriente súbita, el condensador descarga su energía mitigando la caída local de voltaje en la línea y protegiendo al microcontrolador de oscilaciones destructivas en la tensión.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="baudios desajuste baudrate error comunicacion serial">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T19.</span> ¿Qué ocurre si la tasa de baudios del Arduino y del ESP32 no coincide?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">Ocurre un desajuste de sincronización temporal ("baudrate mismatch"). El receptor leerá los flancos de subida y bajada de voltaje en momentos erróneos, lo que deformará los caracteres de la palabra y provocará que el ESP32 reciba cadenas indescifrables de caracteres extraños o basura digital.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="teoricas" data-keywords="watchdog latido heartbeat timeout seguridad software">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-primary); font-weight:800;">T20.</span> ¿Qué diferencia hay entre un Watchdog de hardware y el de software programado?</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text">El Watchdog de hardware es un periférico interno del microcontrolador conectado al circuito de Reset. Si la CPU se congela físicamente por código atascado, el temporizador de hardware expira y reinicia la placa completa eléctricamente. El Watchdog por software que implementamos es una condicional lógica del programa dedicada exclusivamente a validar de forma segura el estado de un enlace remoto para apagar actuadores, sin forzar un reinicio del microcontrolador.</p>
+                        </div>
+                    </div>
+
+                    <!-- ================= 4 RETOS PRÁCTICOS DE DISEÑO ================= -->
+
+                    <div class="bank-item accordion" data-category="retos" data-keywords="calibracion joystick centro desviacion adc valor">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-secondary); font-weight:800;">R1.</span> Reto: Calibración dinámica del centro del Joystick en Setup</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text"><strong>Problema de Diseño:</strong> La grúa en ocasiones se activa sola en reposo porque el centro del joystick no lee exactamente 512, sino 530 o 490 por desgaste térmico.<br><br><strong>Solución por Firmware:</strong> En la función `setup()`, con los joysticks en absoluto reposo, se promedian 10 lecturas ADC consecutivas para capturar el error de compensación nativo ("offset"). Este valor capturado reemplaza al valor estático de "512" en los mapeos analógicos de la grúa del bucle `loop()`, asegurando un balance en reposo dinámico perfecto.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="retos" data-keywords="inversion giro rotacion puente h lógica hardware">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-secondary); font-weight:800;">R2.</span> Reto: Inversión física y lógica de la dirección de un motor</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text"><strong>Problema de Diseño:</strong> Al presionar el botón "Girar Izquierda", la pluma gira físicamente a la derecha por un error en la polaridad del ensamblado de cables.<br><br><strong>Solución A (Física):</strong> Desconectar físicamente el par de cables de salida del motor C del puente H e invertirlos en sus respectivas clemas.<br><br><strong>Solución B (Lógica):</strong> Modificar en el código Arduino las líneas dentro de `setMotorC()` permutando los estados altos y bajos del puente H: donde escribe `digitalWrite(CIN1, HIGH)` cambiarlo a `LOW` y viceversa.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="retos" data-keywords="limites virtuales parada final de carrera angulo estimacion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-secondary); font-weight:800;">R3.</span> Reto: Límites de carrera virtuales mediante estimación de ángulo</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text"><strong>Problema de Diseño:</strong> La grúa no debe girar libremente más allá de los 270° porque el cableado interno se enrolla y podría romperse.<br><br><strong>Solución de Software:</strong> Con base al ángulo calculado en tiempo real, programar una condicional rígida en el firmware de control: `if (estimatedAngle >= 270.0 && speed > 0) { speed = 0; }`. De esta manera, si la pluma intenta sobrepasar el ángulo límite en dirección a las agujas del reloj, el paso al motor de giro se corta inmediatamente a nivel de software.</p>
+                        </div>
+                    </div>
+
+                    <div class="bank-item accordion" data-category="retos" data-keywords="diagnostico enlace serie osciloscopio multimetro baudios led">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-title"><span style="color: var(--accent-secondary); font-weight:800;">R4.</span> Reto: Diagnóstico físico de enlace serie cortado</span>
+                            <svg class="accordion-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="bank-answer-text"><strong>Problema de Diseño:</strong> La red inalámbrica del ESP32 está activa y la consola web carga en el smartphone, pero se queda eternamente en: "Esperando logs de depuración del Arduino Nano..." sin mostrar nada.<br><br><strong>Procedimiento de Diagnóstico:</strong><br>1. **Inspección Física**: Con el multímetro, verificar continuidad eléctrica en el cable de señal entre el Pin D13 del Nano y la entrada del divisor de tensión.<br>2. **Medición de Voltaje**: Comprobar con el osciloscopio o multímetro que la caída en el punto intermedio del divisor resistivo de tensión marque 3.3V al enviar tramas y no 0V permanentes o 5V dañinos.<br>3. **Verificación de GND**: Asegurar que la masa del Arduino Nano esté unificada con el terminal GND del ESP32.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- --- BOTÓN DE CIERRE DE PÁGINAS --- -->
+        <footer>
+            Proyecto de Grado de Grúa Torre Dual • Camila Lusca • Erwin Zambrano • Matias Chisaguano • Milagros Llusca • Mayo 2026
+        </footer>
+    </main>
+
+    <!-- --- LÓGICA DE INTERACTIVIDAD (JAVASCRIPT) --- -->
+    <script>
+        // --- GESTIÓN DE TABS (CONMUTACIÓN DE PÁGINAS) ---
+        const tabTitles = [
+            "💻 Programación (Software)",
+            "🔌 Electrónica (Hardware)",
+            "📐 Diseño y Arquitectura",
+            "🧪 Pruebas y Funcionamiento",
+            "🗣️ Guión de Exposición (Matriz 4x4)",
+            "❓ Quiz y Autoevaluación"
+        ];
+
+        const tabSubtitles = [
+            "Principio de exclusión lógica, firmware en C++, MicroPython y scripts asíncronos.",
+            "Tabla de mapeo de pines del microcontrolador, divisores de tensión y aislamiento eléctrico.",
+            "Topología de arquitectura dual, contrastes de enlaces de red y flashcards interactivas en 3D.",
+            "Mecanismo de seguridad Watchdog, latidos de red y validación del monitor inalámbrico en campo.",
+            "Orden de intervención del equipo y textos de defensa técnica grupal organizados en matriz.",
+            "Evaluación de conocimientos, retos prácticos de ingeniería de examen y banco teórico completo."
+        ];
+
+        function switchTab(tabIndex) {
+            // Desactivar todos los contenidos de pestañas
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Activar la pestaña correspondiente
+            const selectedTab = document.getElementById('tab' + tabIndex);
+            if (selectedTab) selectedTab.classList.add('active');
+
+            // Actualizar navegación sidebar (Desktop)
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => link.classList.remove('active'));
+            if (sidebarLinks[tabIndex]) sidebarLinks[tabIndex].classList.add('active');
+
+            // Actualizar navegación inferior (Mobile)
+            const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+            bottomNavItems.forEach(item => item.classList.remove('remove', 'active'));
+            if (bottomNavItems[tabIndex]) bottomNavItems[tabIndex].classList.add('active');
+
+            // Cambiar textos de la cabecera dinámica
+            document.getElementById('activeTabTitle').textContent = tabTitles[tabIndex];
+            document.getElementById('activeTabSubtitle').textContent = tabSubtitles[tabIndex];
+
+            // Scroll suave hacia arriba
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- SISTEMA CONMUTADOR DE TEMA CLARO/OSCURO ---
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            body.classList.toggle('light-theme');
+            
+            if (body.classList.contains('light-theme')) {
+                // Cambiar ícono a Sol
+                themeIcon.innerHTML = `
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                `;
+            } else {
+                // Cambiar ícono a Luna
+                themeIcon.innerHTML = `
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                `;
+            }
+        }
+
+        // --- ACORDEONES DÍNÁMICOS ---
+        function toggleAccordion(headerElement) {
+            const accordion = headerElement.parentElement;
+            
+            // Conmutar el estado del acordeón seleccionado
+            accordion.classList.toggle('open');
+        }
+
+        // --- MOTOR DE EVALUACIÓN DEL QUIZ ---
+        function checkAnswer(questionNum, optionIndex, correctIndex, explanation) {
+            const questionCard = document.getElementById('q' + questionNum);
+            if (!questionCard) return;
+
+            const options = questionCard.querySelectorAll('.quiz-opt-btn');
+            
+            // Deshabilitar todos los botones de esta pregunta
+            options.forEach(btn => btn.disabled = true);
+
+            // Resaltar la opción seleccionada
+            if (optionIndex === correctIndex) {
+                options[optionIndex].classList.add('correct');
+            } else {
+                options[optionIndex].classList.add('incorrect');
+                // Revelar cuál era la correcta
+                options[correctIndex].classList.add('correct');
+            }
+
+            // Desplegar cuadro de explicación animado
+            const explanationBox = document.getElementById('exp' + questionNum);
+            if (explanationBox) {
+                explanationBox.innerHTML = `<strong>Explicación Técnica:</strong> ${explanation}`;
+                explanationBox.style.display = 'block';
+            }
+        }
+
+        // --- FILTRADO DE MATRIZ DE GUIÓN DE EXPOSICIÓN (4x4) ---
+        function filterExpo(speakerName) {
+            // Actualizar botones de filtro activos
+            const filterBtns = document.querySelectorAll('.expo-filter-btn');
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            
+            const clickedBtn = event.currentTarget;
+            if (clickedBtn) clickedBtn.classList.add('active');
+
+            const items = document.querySelectorAll('.expo-item');
+            
+            items.forEach(item => {
+                if (speakerName === 'all') {
+                    item.classList.remove('highlighted');
+                    item.style.display = 'block';
+                } else if (item.getAttribute('data-speaker') === speakerName) {
+                    item.classList.add('highlighted');
+                    item.style.display = 'block';
+                } else {
+                    item.classList.remove('highlighted');
+                    item.style.display = 'none'; // Ocultar no seleccionados para mejor legibilidad
+                }
+            });
+        }
+
+        // --- BUSQUEDA Y FILTRADO DEL BANCO DE PREGUNTAS ---
+        function filterQuestionBank() {
+            const searchVal = document.getElementById('searchField').value.toLowerCase().trim();
+            const categoryVal = document.getElementById('categoryFilter').value;
+            const items = document.querySelectorAll('.bank-item');
+
+            items.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                const keywords = item.getAttribute('data-keywords').toLowerCase();
+                const titleText = item.querySelector('.accordion-header').textContent.toLowerCase();
+                
+                // Verificar Filtro de Categoría
+                const matchesCategory = (categoryVal === 'all' || itemCategory === categoryVal);
+                
+                // Verificar Filtro de Búsqueda
+                const matchesSearch = (searchVal === '' || 
+                                       titleText.includes(searchVal) || 
+                                       keywords.includes(searchVal));
+
+                if (matchesCategory && matchesSearch) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

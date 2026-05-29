@@ -93,23 +93,29 @@ async def uart_reader_task():
     """Lee continuamente los logs desde la conexión serial de Arduino Nano."""
     global logs
     print("Tarea del lector UART iniciada...")
+    buffer = b""
     while True:
         try:
             await asyncio.sleep_ms(30)
             if uart.any():
-                line = uart.readline()
-                if not line:
-                    continue
-                try:
-                    # Decodificar y limpiar la traza
-                    s = line.decode('utf-8').strip()
-                    if s:
-                        logs.append(s)
-                        if len(logs) > MAX_LOGS:
-                            logs.pop(0)
-                        print(f"[UART LOG] {s}")
-                except Exception:
-                    pass
+                chunk = uart.read()
+                if chunk:
+                    buffer += chunk
+                    # Evitar crecimiento indefinido del buffer si no hay saltos de línea
+                    if len(buffer) > 1024:
+                        buffer = buffer[-1024:]
+                    while b"\n" in buffer:
+                        line, buffer = buffer.split(b"\n", 1)
+                        try:
+                            # Decodificar y limpiar la traza
+                            s = line.decode('utf-8').strip()
+                            if s:
+                                logs.append(s)
+                                if len(logs) > MAX_LOGS:
+                                    logs.pop(0)
+                                print(f"[UART LOG] {s}")
+                        except Exception:
+                            pass
         except Exception as e:
             print("Error en uart_reader_task:", e)
 
@@ -120,9 +126,9 @@ async def handle_client(reader, writer):
         request_str = request.decode('utf-8')
 
         if request_str.startswith('GET / '):
-            # Renderizar logs en orden cronológico (más recientes abajo)
+            # Renderizar logs en orden cronológico inverso (más recientes arriba)
             log_lines = ""
-            for log in logs:
+            for log in reversed(logs):
                 log_lines += f'<div class="line">{log}</div>'
             
             if not log_lines:

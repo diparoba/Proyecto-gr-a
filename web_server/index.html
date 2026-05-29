@@ -388,11 +388,11 @@
                     </svg> Carro Horizontal <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 400; text-transform: none; margin-left: auto;">[Teclas A / D]</span>
                 </h2>
                 <div class="button-grid">
-                    <button id="btnCarLeft" onclick="sendCommand('car_left')">
+                    <button id="btnCarLeft" data-cmd="car_left">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
                         Izquierda
                     </button>
-                    <button id="btnCarRight" onclick="sendCommand('car_right')">
+                    <button id="btnCarRight" data-cmd="car_right">
                         Derecha
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                     </button>
@@ -406,11 +406,11 @@
                     </svg> Elevación Gancho <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 400; text-transform: none; margin-left: auto;">[Teclas W / S]</span>
                 </h2>
                 <div class="button-grid">
-                    <button id="btnElevUp" onclick="sendCommand('elev_up')">
+                    <button id="btnElevUp" data-cmd="elev_up">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
                         Subir
                     </button>
-                    <button id="btnElevDown" onclick="sendCommand('elev_down')">
+                    <button id="btnElevDown" data-cmd="elev_down">
                         Bajar
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7-7-7"></path></svg>
                     </button>
@@ -424,11 +424,11 @@
                     </svg> Giro Pluma <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 400; text-transform: none; margin-left: auto;">[Teclas Q / E]</span>
                 </h2>
                 <div class="button-grid">
-                    <button id="btnGiroLeft" onclick="sendCommand('giro_left')">
+                    <button id="btnGiroLeft" data-cmd="giro_left">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 14H9m0 0V8m0 6L21 2M9 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path></svg>
                         Girar Izq
                     </button>
-                    <button id="btnGiroRight" onclick="sendCommand('giro_right')">
+                    <button id="btnGiroRight" data-cmd="giro_right">
                         Girar Der
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 14h6m0 0V8m0 6L3 2M15 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path></svg>
                     </button>
@@ -837,6 +837,36 @@
         }
 
         setInterval(fetchTelemetryHTTP, 1000); // Frecuencia reducida de respaldo para no sobrecargar el ESP32
+
+        // Configurar eventos de presionar/soltar para los botones táctiles y ratón
+        const controlButtons = document.querySelectorAll('button[data-cmd]');
+        controlButtons.forEach(btn => {
+            const cmd = btn.getAttribute('data-cmd');
+            
+            // Función para iniciar movimiento
+            const startMove = (e) => {
+                if (currentMode === "manual" || btn.disabled) return;
+                e.preventDefault();
+                sendCommand(cmd);
+            };
+
+            // Función para detener movimiento
+            const stopMove = (e) => {
+                if (currentMode === "manual") return;
+                e.preventDefault();
+                sendCommand('stop');
+            };
+
+            // Eventos de ratón
+            btn.addEventListener('mousedown', startMove);
+            btn.addEventListener('mouseup', stopMove);
+            btn.addEventListener('mouseleave', stopMove);
+
+            // Eventos táctiles (móviles/tabletas)
+            btn.addEventListener('touchstart', startMove, { passive: false });
+            btn.addEventListener('touchend', stopMove, { passive: false });
+            btn.addEventListener('touchcancel', stopMove, { passive: false });
+        });
     </script>
 </body>
 </html>

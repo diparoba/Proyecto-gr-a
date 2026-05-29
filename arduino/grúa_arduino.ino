@@ -30,7 +30,7 @@ const int MAX_SPEED_ELEVACION = 255;
 const int MAX_SPEED_GIRO = 255;
 
 // Configuración de Joystick
-const int DEADZONE = 30; // Zona muerta analógica para filtrar el ruido
+const int DEADZONE = 80; // Zona muerta analógica incrementada a 80 para filtrar drift/ruido y evitar movimiento en reposo
 
 // Estado del sistema
 bool manualMode = false; // false = Modo Web (por defecto), true = Modo Manual (Joysticks)
